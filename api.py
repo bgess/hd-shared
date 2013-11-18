@@ -14,7 +14,7 @@ trying every time until it gets a good response.
 """
 from google.appengine.api import memcache
 from google.appengine.api import urlfetch
-from django.utils import simplejson
+from json
 
 DEADLINE = 7
 
@@ -24,7 +24,7 @@ def _request(url, cache_ttl=3600, force=False):
     resp = memcache.get(request_cache_key)
     if force or not resp:
         try:
-            resp = simplejson.loads(urlfetch.fetch(url, deadline=DEADLINE).content)
+            resp = json.loads(urlfetch.fetch(url, deadline=DEADLINE).content)
             memcache.set(request_cache_key, resp, cache_ttl)
             memcache.set(failure_cache_key, resp, cache_ttl*10)
         except (ValueError, urlfetch.DownloadError), e:
